@@ -1,0 +1,27 @@
+name: app_info
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  battery_plus: ^4.1.0
+  connectivity_plus: ^5.0.1
+  device_info_plus: ^9.1.0
+  flutter:
+    sdk: flutter
+  network_info_plus: ^4.1.0
+  package_info_plus: ^4.2.0
+  permission_handler: ^11.0.1
+  sensors_plus: ^3.1.0
+  share_plus: ^7.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true

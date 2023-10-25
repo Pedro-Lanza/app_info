@@ -36,20 +36,26 @@ class _NetworkState extends State<Network> {
         wifiSubmask;
 
     try {
-      if (!kIsWeb && Platform.isIOS) {
-        var status = await Permission.location.isDenied;
-        if (status) {
-          status = await Permission.location.request().isGranted;
-        }
-        if (status) {
-          wifiName = await _networkInfo.getWifiName();
-        } else {
-          wifiName = await _networkInfo.getWifiName();
-        }
-      } else {
-        wifiName = await _networkInfo.getWifiName();
+      var status = await Permission.location;
+      var request;
+      if (await status.isDenied) {
+        request = await Permission.location.request();
       }
-      // if (wifiName == null) throw Exception();
+      wifiName = await _networkInfo.getWifiName();
+      // if (!kIsWeb && Platform.isIOS) {
+      //   var status = await Permission.location.isDenied;
+      //   if (status) {
+      //     status = await Permission.location.request().isGranted;
+      //   }
+      //   if (status) {
+      //     wifiName = await _networkInfo.getWifiName();
+      //   } else {
+      //     wifiName = await _networkInfo.getWifiName();
+      //   }
+      // } else {
+      //   wifiName = await _networkInfo.getWifiName();
+      // }
+      if (wifiName == null) throw Exception();
     } catch (e) {
       wifiName = 'Failed to get wifi name';
     }

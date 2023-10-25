@@ -1,6 +1,11 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:file_selector/file_selector.dart' hide XFile;
+import 'package:image_picker/image_picker.dart' hide XFile;
 
 class ShareInfo extends StatefulWidget {
   @override
@@ -46,6 +51,25 @@ class _ShareInfoState extends State<ShareInfo> {
           }),
         ),
         const SizedBox(height: 16),
+        // ImagePreviews(imagePaths, onDelete: _onDeleteImage),
+        ElevatedButton.icon(
+          label: const Text('Add image'),
+          onPressed: () async {
+            // Using `package:image_picker` to get image from gallery.
+
+            final imagePicker = ImagePicker();
+            final pickedFile = await imagePicker.pickImage(
+              source: ImageSource.gallery,
+            );
+            if (pickedFile != null) {
+              setState(() {
+                imagePaths.add(pickedFile.path);
+                imageNames.add(pickedFile.name);
+              });
+            }
+          },
+          icon: const Icon(Icons.add),
+        ),
         Builder(builder: (BuildContext context) {
           return ElevatedButton(
             onPressed: text.isEmpty && imagePaths.isEmpty && uri.isEmpty

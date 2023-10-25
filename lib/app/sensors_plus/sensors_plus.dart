@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 class Sensors extends StatefulWidget {
@@ -22,6 +23,15 @@ class _SensorsState extends State<Sensors> {
   @override
   void initState() {
     super.initState();
+    _initSensorStates();
+  }
+
+  void _initSensorStates() async {
+    var permit = Permission.sensors;
+    if (await permit.isDenied) {
+      await Permission.sensors.request();
+    }
+
     _streamSubscriptions
         .add(userAccelerometerEvents.listen((UserAccelerometerEvent event) {
       setState(() {

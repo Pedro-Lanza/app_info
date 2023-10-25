@@ -78,12 +78,35 @@ class _ShareInfoState extends State<ShareInfo> {
             child: const Text('Compartilhar'),
           );
         }),
+        const SizedBox(height: 16),
         Builder(builder: (BuildContext context) {
           return ElevatedButton(
             onPressed: text.isEmpty && imagePaths.isEmpty
                 ? null
                 : () => _onShareWithResult(context),
             child: const Text('Compartilhar com resultado'),
+          );
+        }),
+        const SizedBox(height: 16),
+        Builder(
+          builder: (BuildContext context) {
+            return ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+              ),
+              onPressed: () {
+                _onShareXFileFromAssets(context);
+              },
+              child: const Text('Share XFile from Assets'),
+            );
+          },
+        ),
+        const SizedBox(height: 16),
+        Builder(builder: (BuildContext context) {
+          return ElevatedButton(
+            onPressed: () => _onRemoveAllImages(),
+            child: const Text('remover imagens'),
           );
         }),
       ],
@@ -95,6 +118,12 @@ class _ShareInfoState extends State<ShareInfo> {
       imagePaths.removeAt(position);
       imageNames.removeAt(position);
     });
+  }
+
+  void _onRemoveAllImages() {
+    for (var i = imagePaths.length - 1; i >= 0; i--) {
+      _onDeleteImage(i);
+    }
   }
 
   void _onShare(BuildContext context) async {
